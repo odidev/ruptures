@@ -74,6 +74,7 @@ nav:
     - 'Advanced usages':
       - 'Introduction': examples/advanced-usages-introduction.md
       - notebooks/kernel-cpd-performance-comparison.md
+      - notebooks/kernel-cpd-model-selection.md
   - Code reference:
       - Introduction: code-reference/index.md
       - Base classes: code-reference/base-reference.md
