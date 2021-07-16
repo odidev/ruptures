@@ -2,9 +2,9 @@ name: Upload package to Pypi
 
 on:
   push:
-    branches: [ master ]
+    branches: [ test_branch ]
   pull_request:
-    branches: [ master ]
+    branches: [ test_branch ]
 #on:
  # workflow_dispatch:
   #  inputs:
