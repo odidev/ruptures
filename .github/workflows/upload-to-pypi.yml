@@ -100,6 +100,8 @@ jobs:
           CIBW_ARCHS_LINUX: ${{matrix.arch}}
           CIBW_BUILD: cp${{ matrix.python }}-${{ matrix.platform_id }}
           # Manually force a version
+          CIBW_TEST_REQUIRES: pytest
+          CIBW_TEST_COMMAND: "pytest"
           CIBW_ENVIRONMENT: "SETUPTOOLS_SCM_PRETEND_VERSION=${{ github.event.inputs.overrideVersion }}"
       - uses: actions/upload-artifact@v2
         with:
