@@ -5,9 +5,9 @@ name: Run tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [ test_branch  ]
   pull_request:
-    branches: [ master ]
+    branches: [ test_branch  ]
 
 jobs:
   build:
@@ -32,3 +32,31 @@ jobs:
     - name: Test with pytest
       run: |
         python -m pytest
+        
+  test-aarch64:
+    name: "Test ${{ matrix.pyver }} aarch64"
+    strategy:
+      matrix:
+        pyver: [cp36-cp36m, cp37-cp37m, cp38-cp38, cp39-cp39]
+      fail-fast: false
+    runs-on: ubuntu-latest
+    env:
+      py: /opt/python/${{ matrix.pyver }}/bin/python
+      img: quay.io/pypa/manylinux2014_aarch64
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+    - name: Set up QEMU
+      id: qemu
+      uses: docker/setup-qemu-action@v1
+    - name: Install dependencies
+      run: |
+            docker run --rm -v ${{ github.workspace }}:/ws:rw --workdir=/ws \
+            ${{ env.img }} \
+            bash -exc '${{ env.py }} -m pip install virtualenv && ${{ env.py }} -m venv .env && \
+            source .env/bin/activate && \
+            python -m pip install pip==21.0.1 && \
+            python -m pip install .[test] && \
+            python -m pytest && \
+            deactivate'
+        
