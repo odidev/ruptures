@@ -94,6 +94,11 @@ jobs:
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
 
+      - name: Install ruptures
+        run: |
+          python -m pip install pip==21.0.1
+          python -m pip install .[test]
+        
       - name: Build wheels
         uses: joerick/cibuildwheel@v1.9.0
         env:
